@@ -1,17 +1,5 @@
-function LengthDL()
-{
-    console.log("LENGTH");
-    var options = "";
-    
-    for(var i = 16;i<33;i++)
-    {
-        options += "<option>"+ i +"</option>";
-    }
-    document.getElementById("length").innerHTML = options;
-    
-}
 
-function Generate()
+var  Generate = () =>
             {
                 var examb ="!@#$%^&*_+=*.";
                 var exsym ="!@#$%^&*()_+=[]{}':;*/.\"<>~`";
@@ -98,7 +86,7 @@ function Generate()
                         {    
                         do
                         {
-                          temporarypassword= password.replace(password.charAt(i),"A");
+                          temporarypassword= password.replace(password.charAt(i),possible.charAt(Math.floor(Math.random()*possible.length)+1));
                         }while(RegExp(/[<>{}()/]\\[\'"`~,;:.]/gi).test(temporarypassword==false))
                                 checkedpassword+=temporarypassword.charAt(i);
                                 temporarypassword="";
@@ -112,38 +100,47 @@ function Generate()
                         }
                         
                         document.getElementById('password').value=checkedpassword; 
-                        var myObj, myJSON, text, obj;
-                        //Storing data:
-                        myObj = { "A":"APPLE", "B":"BEER", "C":"CRAB","D":"DEER", "E":"EAGLE", "F":"FOX", "G":"GECKO", "H":"HORSE" ,"I":"INSECT", "J":"JAGUAR", "K":"KOALA", "L":"LION", "M":"MONKEY", "N":"NEWT", "O":"OCTOPUS", "P":"PENGUIN", "Q":"QUAIL", "R":"RABBIT", "S":"SEAL", "T":"TIGER", "U":"UGUISU", "V":"VAMPIREBAT", "W":"WHALE", "X":"X-RAYTETRA", "Y":"YAK", "Z":"ZEBRA",  "a":"apple", "b":"beer", "c":"crab","d":"deer", "e":"eagle", 
-                        "f":"fox", "g":"gecko", "h":"horse" ,"i":"insect", "j":"jaguar", "k":"koala", "l":"lion", "m":"monkey", "n":"newt", "o":"octopus", "p":"penguin", "q":"quail", "r":"rabbit", "s":"seal", "t":"tiger", "u":"uguisu", "v":"vampirebat", "w":"whale", "x":"x-raytetra", "y":"yak", "z":"zebra"};
-                        
-                        myJSON = JSON.stringify(myObj);
-                        localStorage.setItem("Library", myJSON);
-        
-                        //Retrieving data:
-                        text = localStorage.getItem("Library");
-                        obj = JSON.parse(text);
-                        
-                        var RemPassword="";
-                        //Getting each character from password to identify its type for displaying of JSON import values
-                        for(i=0;i<=lengthval;i++)
-                        {
-                            if(isNaN(checkedpassword.charAt(i))==false)
-                            {
-                                RemPassword+=checkedpassword.charAt(i);   
-                            }
-                           else if(RegExp(/[-!$%^&*()_#@+|~=`{}\[\]:";'<>?,.\/]/gi).test(checkedpassword.charAt(i)))    
-                            {
-                                RemPassword+=checkedpassword.charAt(i);
-                            }
-                            else if(isNaN(obj[checkedpassword.charAt(i)])==true)
-                            {
-                                RemPassword+=obj[checkedpassword.charAt(i)];   
-                            }  
-                        }
-                        
-                        document.getElementById('rememberpassword').value= RemPassword;
                     }
-    function Getdata() {
-               
-            }
+
+                     
+                    var GetData = () => {
+                        
+                            var xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function() {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    // document.getElementById("demo").innerHTML =
+                                   console.log(this.responseText); 
+                                    data=JSON.parse(this.response);   
+                            }
+                            };
+                            xhttp.open("GET", "./Library.json", true);
+                            xhttp.send(); 
+                            }
+     function DisplayData()
+ {
+   console.log(data);
+    var RemPassword="";
+    //Getting each character from password to identify its type for displaying of JSON import values
+    for(i=0;i<=lengthval;i++)
+    {
+        if(isNaN(checkedpassword.charAt(i))==false)
+        {
+            console.log("1");
+            RemPassword+=checkedpassword.charAt(i);   
+        }
+       else if(RegExp(/[-!$%^&*()_#@+|~=`{}\[\]:";'<>?,.\/]/gi).test(checkedpassword.charAt(i)))    
+        {
+            console.log("2");
+            RemPassword+=checkedpassword.charAt(i);
+        }
+        else if(isNaN(checkedpassword.charAt(i))==true)
+        {   
+            console.log("3");
+            
+            RemPassword+=data[checkedpassword.charAt(i)];   
+        }  
+    }
+    
+    document.getElementById('rememberpassword').value= RemPassword;
+   
+}

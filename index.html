@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>  
+        <title> Password Generator </title>
+    </head>
+    
+    <script src="./fill.js"></script>
+    <script src="./functions.js"></script>
+
+<body onload=LengthDL(),GetData()>
+    
+    <form name="constraints" id="constraints">
+        
+        Password Length : <select id="length"> </select> 
+        <br>    
+        Include Symbols : <input type="checkbox" name="symbols" id="symbols">
+        <br>    
+        Include Numbers : <input type="checkbox" name="numbers" id="numbers">
+        <br>    
+        Include Lowercase Characters: <input type="checkbox" name="LowCase" id="LowCase">
+        <br>        
+        Include Uppercase Characters: <input type="checkbox" name="UpCase" id="UpCase">
+        <br>    
+        Exclude Ambiguous Characters: <input type="checkbox" name="AmbiChar" id="AmbiChar">
+        <br>    
+        Exclude Similar Characters: <input type="checkbox" name="SimiChar" id="SimiChar">
+        <br>
+        <input type="button" value="generate" onclick="Generate()">
+        <br>
+        Your New Password: <input type="text" id="password" name="password" onchange=DisplayData()>
+        <br>
+        Remember Your Password: <input type="text" id="rememberpassword" name="rememberpassword">
+    </form>
+</body>
+</html>
